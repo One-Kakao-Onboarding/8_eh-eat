@@ -3163,9 +3163,9 @@
                 if (mode === 'result') {
                     AppState.isResultView = true;
                     const resultData = {
-                        placeName: urlParams.get('place') ? decodeURIComponent(urlParams.get('place')) : '',
-                        address: urlParams.get('address') ? decodeURIComponent(urlParams.get('address')) : '',
-                        category: urlParams.get('category') ? decodeURIComponent(urlParams.get('category')) : '',
+                        placeName: urlParams.get('place') || '',
+                        address: urlParams.get('address') || '',
+                        category: urlParams.get('category') || '',
                         date: meetingDate || '',
                         time: meetingTime || '',
                         lat: urlParams.get('lat') || '',
@@ -3178,7 +3178,7 @@
                     const participantsParam = urlParams.get('participants');
                     if (participantsParam) {
                         try {
-                            resultData.participants = JSON.parse(decodeURIComponent(participantsParam));
+                            resultData.participants = JSON.parse(participantsParam);
                         } catch (e) {
                             console.error('참여자 정보 파싱 실패:', e);
                         }
@@ -3186,7 +3186,7 @@
 
                     AppState.meetingSession = {
                         id: AppState.sessionId,
-                        title: meetingTitle ? decodeURIComponent(meetingTitle) : '약속',
+                        title: meetingTitle || '약속',
                         date: meetingDate || '',
                         time: meetingTime || ''
                     };
@@ -3202,7 +3202,7 @@
                 if (meetingTitle) {
                     AppState.meetingSession = {
                         id: AppState.sessionId,
-                        title: decodeURIComponent(meetingTitle),
+                        title: meetingTitle,
                         date: meetingDate || '',
                         time: meetingTime || ''
                     };
@@ -3427,7 +3427,7 @@
             const params = new URLSearchParams();
             params.set('session', AppState.sessionId);
             if (session && session.title) {
-                params.set('title', encodeURIComponent(session.title));
+                params.set('title', session.title); // URLSearchParams가 자동으로 인코딩함
             }
             if (session && session.date) {
                 params.set('date', session.date);
@@ -3506,12 +3506,15 @@
                 buttonTitle = '지금 참여하기';
             }
 
+            // 카카오 공유 전에 URL을 클립보드에 복사 (링크가 안 열릴 경우 대비)
+            copyToClipboard(shareURL);
+
             const shareData = {
                 objectType: 'feed',
                 content: {
                     title: `📍 ${title}`,
                     description: description,
-                    imageUrl: 'https://mud-kage.kakao.com/dn/Q2iNx/btqgeRgV54P/VLdBs9cvyn8BJXB3o7N8UK/kakaolink40_original.png',
+                    imageUrl: 'https://stalwart-liger-9e766d.netlify.app/share-image.png',
                     link: {
                         mobileWebUrl: shareURL,
                         webUrl: shareURL
@@ -4454,15 +4457,15 @@
             params.set('mode', 'result');
 
             if (session) {
-                if (session.title) params.set('title', encodeURIComponent(session.title));
+                if (session.title) params.set('title', session.title);
                 if (session.date) params.set('date', session.date);
                 if (session.time) params.set('time', session.time);
             }
 
             if (place) {
-                params.set('place', encodeURIComponent(place.place_name || place.name || ''));
-                params.set('address', encodeURIComponent(place.address_name || place.address || ''));
-                params.set('category', encodeURIComponent(place.category_name || ''));
+                params.set('place', place.place_name || place.name || '');
+                params.set('address', place.address_name || place.address || '');
+                params.set('category', place.category_name || '');
                 if (place.x) params.set('lng', place.x);
                 if (place.y) params.set('lat', place.y);
             }
