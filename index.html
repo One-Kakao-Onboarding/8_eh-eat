@@ -206,6 +206,10 @@
             -webkit-overflow-scrolling: touch;
         }
 
+        .phase-content.phase1-chat-bg {
+            overflow: hidden;
+        }
+
         .phase-footer {
             padding: 16px;
             background: white;
@@ -598,7 +602,10 @@
            ======================================== */
         .phase1-chat-bg {
             background: var(--chat-bg);
-            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            overflow: hidden;
         }
 
         .phase1-header {
@@ -607,6 +614,7 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-shrink: 0;
         }
 
         .phase1-header-left {
@@ -632,6 +640,7 @@
             gap: 4px;
             padding: 8px 16px;
             background: var(--chat-bg);
+            flex-shrink: 0;
         }
 
         .phase1-avatar {
@@ -650,6 +659,7 @@
             flex: 1;
             padding: 16px;
             overflow-y: auto;
+            min-height: 0;
         }
 
         .phase1-date-badge {
@@ -808,6 +818,7 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            flex-shrink: 0;
         }
 
         .phase1-input-bar input {
@@ -830,162 +841,546 @@
             cursor: pointer;
         }
 
-        /* Result Card (결과 공유용) */
-        .result-card {
-            max-width: 300px;
-            margin: 0 auto;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        .phase1-input-bar .plus-btn {
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            font-size: 28px;
+            color: var(--dark-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+            transition: transform 0.3s ease;
         }
 
-        .result-card-header {
+        .phase1-input-bar .plus-btn.active {
+            transform: rotate(45deg);
+        }
+
+        /* Chat Menu (채팅 메뉴) */
+        .chat-menu {
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            padding: 16px 12px;
+            display: none;
+            flex-shrink: 0;
+        }
+
+        .chat-menu.active {
+            display: block;
+        }
+
+        .chat-menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px 4px;
+        }
+
+        .chat-menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .chat-menu-item:active {
+            opacity: 0.7;
+        }
+
+        .chat-menu-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .chat-menu-icon.yellow { background: #FEE500; }
+        .chat-menu-icon.orange { background: #FF9500; }
+        .chat-menu-icon.red { background: #FF3B30; }
+        .chat-menu-icon.blue { background: #007AFF; }
+        .chat-menu-icon.green { background: #34C759; }
+        .chat-menu-icon.purple { background: #AF52DE; }
+        .chat-menu-icon.gray { background: #8E8E93; color: white; }
+        .chat-menu-icon.lightblue { background: #5AC8FA; }
+
+        .chat-menu-label {
+            font-size: 11px;
+            color: var(--dark-text);
+            font-weight: 500;
+        }
+
+        /* Result Bubble (채팅 말풍선 스타일 결과) */
+        .result-bubble {
+            align-items: flex-start !important;
+        }
+
+        .result-bubble .bubble-content {
+            max-width: 280px;
+        }
+
+        .result-bubble-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+
+        .result-bubble-header {
             background: linear-gradient(135deg, var(--kakao-yellow), #FFD43B);
-            padding: 20px;
+            padding: 14px;
             text-align: center;
         }
 
-        .result-card-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
+        .result-bubble-badge {
+            display: inline-block;
             background: rgba(255,255,255,0.9);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 12px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
             color: var(--dark-text);
-            margin-bottom: 12px;
+            margin-bottom: 8px;
         }
 
-        .result-card-title {
-            font-size: 22px;
+        .result-bubble-place {
+            font-size: 18px;
             font-weight: 700;
             color: var(--dark-text);
-            margin-bottom: 4px;
+            margin-bottom: 2px;
         }
 
-        .result-card-category {
-            font-size: 13px;
+        .result-bubble-category {
+            font-size: 12px;
             color: var(--dark-text);
             opacity: 0.7;
         }
 
-        .result-card-body {
-            background: white;
-            padding: 16px;
-        }
-
-        .result-info-row {
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .result-bubble-body {
             padding: 12px;
-            background: var(--gray-bg);
-            border-radius: 12px;
-            margin-bottom: 10px;
         }
 
-        .result-info-icon {
-            width: 36px;
-            height: 36px;
-            background: white;
-            border-radius: 10px;
+        .result-bubble-info {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 18px;
-        }
-
-        .result-info-content {
-            flex: 1;
-        }
-
-        .result-info-label {
-            font-size: 11px;
-            color: var(--gray-text);
-            margin-bottom: 2px;
-        }
-
-        .result-info-value {
-            font-size: 14px;
-            font-weight: 600;
+            gap: 8px;
+            font-size: 13px;
             color: var(--dark-text);
+            margin-bottom: 8px;
         }
 
-        .result-participants {
+        .result-bubble-participants {
             display: flex;
             flex-wrap: wrap;
-            gap: 6px;
-            margin-bottom: 12px;
+            gap: 4px;
+            margin: 10px 0;
         }
 
-        .result-participant-chip {
-            display: flex;
+        .result-bubble-participants .participant-chip {
+            display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 6px 10px;
+            gap: 4px;
+            padding: 4px 8px;
             background: var(--gray-bg);
-            border-radius: 20px;
-            font-size: 12px;
+            border-radius: 12px;
+            font-size: 11px;
         }
 
-        .result-participant-avatar {
-            width: 20px;
-            height: 20px;
+        .result-bubble-participants .participant-avatar {
+            width: 16px;
+            height: 16px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
         }
 
-        .result-fairness {
+        .result-bubble-fairness {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            padding: 14px;
+            gap: 4px;
+            padding: 10px;
             background: var(--green-bg);
-            border-radius: 12px;
-            margin-bottom: 12px;
+            border-radius: 10px;
+            font-size: 13px;
+            color: #2E7D32;
+            margin-bottom: 10px;
         }
 
-        .result-fairness-score {
-            font-size: 24px;
+        .result-bubble-fairness .fairness-score {
+            font-size: 20px;
             font-weight: 700;
             color: var(--green-success);
         }
 
-        .result-fairness-label {
-            font-size: 13px;
-            color: #2E7D32;
+        .result-bubble-actions {
+            display: flex;
+            gap: 6px;
         }
 
-        .result-card-actions {
+        .result-bubble-actions button {
+            flex: 1;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--gray-bg);
+            color: var(--dark-text);
+        }
+
+        .result-bubble-actions button:last-child {
+            background: var(--kakao-yellow);
+        }
+
+        /* ========================================
+           Result Chat View (결과 공유 채팅방)
+           ======================================== */
+        .result-chat-view {
+            display: none;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+            background: var(--chat-bg);
+            box-shadow: 0 0 30px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .result-chat-view.active {
             display: flex;
+        }
+
+        .result-chat-header {
+            flex-shrink: 0;
+            padding: 12px 16px;
+            background: var(--chat-bg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .result-chat-header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .result-chat-back {
+            font-size: 24px;
+            color: var(--dark-text);
+            opacity: 0.7;
+        }
+
+        .result-chat-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .result-chat-count {
+            font-size: 12px;
+            color: var(--dark-text);
+            opacity: 0.6;
+        }
+
+        .result-chat-menu {
+            font-size: 20px;
+            color: var(--dark-text);
+            opacity: 0.7;
+        }
+
+        .result-chat-avatars {
+            flex-shrink: 0;
+            display: flex;
+            gap: 8px;
+            padding: 8px 16px 16px;
+            background: var(--chat-bg);
+        }
+
+        .result-chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-text);
+        }
+
+        .result-chat-messages {
+            flex: 1 1 auto;
+            padding: 16px;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .result-chat-date {
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .result-chat-date {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            font-size: 12px;
+            color: var(--dark-text);
+            opacity: 0.6;
+            background: rgba(0,0,0,0.05);
+            padding: 6px 12px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+
+        .result-chat-msg {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        /* 내 메시지 (오른쪽 정렬) */
+        .result-chat-msg.my-msg {
+            flex-direction: row-reverse;
+        }
+
+        .result-chat-msg.my-msg .msg-content {
+            align-items: flex-end;
+        }
+
+        .result-chat-msg.my-msg .msg-result-card {
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+
+        .result-chat-msg.my-msg .msg-bubble {
+            background: var(--kakao-yellow);
+            border-radius: 16px;
+            border-top-right-radius: 4px;
+            border-top-left-radius: 16px;
+        }
+
+        .msg-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--dark-text);
+            flex-shrink: 0;
+        }
+
+        .msg-content {
+            max-width: 260px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg-name {
+            font-size: 12px;
+            color: var(--dark-text);
+            opacity: 0.6;
+            margin-bottom: 4px;
+        }
+
+        .msg-bubble {
+            background: white;
+            padding: 10px 14px;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            font-size: 14px;
+            color: var(--dark-text);
+        }
+
+        /* 결과 메시지 카드 */
+        .msg-result-card {
+            background: white;
+            border-radius: 16px;
+            border-top-left-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .msg-result-header {
+            background: linear-gradient(135deg, var(--kakao-yellow), #FFD43B);
+            padding: 14px;
+            text-align: center;
+        }
+
+        .msg-result-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 8px;
+        }
+
+        .msg-result-place {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--dark-text);
+            margin-bottom: 2px;
+        }
+
+        .msg-result-category {
+            font-size: 12px;
+            color: var(--dark-text);
+            opacity: 0.7;
+        }
+
+        .msg-result-body {
+            padding: 12px;
+        }
+
+        .msg-result-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--dark-text);
+            margin-bottom: 6px;
+        }
+
+        .msg-result-participants {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin: 10px 0;
+        }
+
+        .msg-result-participants .p-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 8px;
+            background: var(--gray-bg);
+            border-radius: 10px;
+            font-size: 11px;
+        }
+
+        .msg-result-participants .p-avatar {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 9px;
+            font-weight: 600;
+        }
+
+        .msg-result-fairness {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            padding: 10px;
+            background: var(--green-bg);
+            border-radius: 10px;
+            font-size: 13px;
+            color: #2E7D32;
+            margin-bottom: 10px;
+        }
+
+        .msg-result-fairness .fairness-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--green-success);
+        }
+
+        .msg-result-actions {
+            display: flex;
+            gap: 6px;
+        }
+
+        .msg-result-actions button {
+            flex: 1;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--gray-bg);
+            color: var(--dark-text);
+        }
+
+        .msg-result-actions button:last-child {
+            background: var(--kakao-yellow);
+        }
+
+        .result-chat-input {
+            flex-shrink: 0;
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            background: white;
+            border-top: 1px solid var(--gray-border);
+            display: flex;
+            align-items: center;
             gap: 8px;
         }
 
-        .result-card-actions button {
+        .result-chat-input input {
             flex: 1;
-            height: 44px;
+            height: 40px;
+            padding: 0 16px;
+            background: var(--gray-bg);
             border: none;
-            border-radius: 10px;
+            border-radius: 20px;
             font-size: 14px;
-            font-weight: 600;
+        }
+
+        .result-chat-input .send-btn {
+            width: 40px;
+            height: 40px;
+            background: var(--kakao-yellow);
+            border: none;
+            border-radius: 50%;
+            font-size: 18px;
             cursor: pointer;
         }
 
-        .result-btn-primary {
-            background: var(--kakao-yellow);
+        .result-chat-input .plus-btn {
+            width: 36px;
+            height: 36px;
+            background: none;
+            border: none;
+            font-size: 28px;
             color: var(--dark-text);
-        }
-
-        .result-btn-secondary {
-            background: var(--gray-bg);
-            color: var(--dark-text);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
         }
 
         /* ========================================
@@ -1382,6 +1777,55 @@
             font-size: 12px;
             color: #666;
             margin-top: 4px;
+        }
+
+        .phase4-ai-reason {
+            margin: 12px 16px;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFF9E6 0%, #FFF5D6 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(254, 229, 0, 0.3);
+        }
+
+        .ai-reason-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .ai-reason-icon {
+            font-size: 20px;
+        }
+
+        .ai-reason-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+
+        .ai-reason-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        .ai-reason-content ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .ai-reason-content li {
+            margin-bottom: 6px;
+        }
+
+        .ai-reason-content li:last-child {
+            margin-bottom: 0;
+        }
+
+        .ai-reason-highlight {
+            color: var(--dark-text);
+            font-weight: 600;
         }
 
         .phase4-place-list {
@@ -2059,6 +2503,87 @@
         <div id="map"></div>
     </div>
 
+    <!-- Result Chat View (결과 공유용 채팅방 뷰) -->
+    <div class="result-chat-view" id="result-chat-view">
+        <div class="result-chat-header">
+            <div class="result-chat-header-left">
+                <span class="result-chat-back">‹</span>
+                <div>
+                    <div class="result-chat-title" id="result-chat-title">대학 동창 모임</div>
+                    <div class="result-chat-count" id="result-chat-count">4</div>
+                </div>
+            </div>
+            <span class="result-chat-menu">☰</span>
+        </div>
+
+        <div class="result-chat-avatars" id="result-chat-avatars">
+            <div class="result-chat-avatar" style="background: var(--avatar-yellow);">노</div>
+            <div class="result-chat-avatar" style="background: var(--avatar-green);">후</div>
+            <div class="result-chat-avatar" style="background: var(--avatar-pink);">테</div>
+            <div class="result-chat-avatar" style="background: var(--avatar-blue);">나</div>
+        </div>
+
+        <div class="result-chat-messages">
+            <div class="result-chat-date" id="result-chat-date">2024년 1월 15일 월요일</div>
+
+            <!-- 기존 채팅 메시지들 -->
+            <div class="result-chat-msg">
+                <div class="msg-avatar" style="background: var(--avatar-green);">후</div>
+                <div class="msg-content">
+                    <div class="msg-name">후니</div>
+                    <div class="msg-bubble">장소 정했어? 😊</div>
+                </div>
+            </div>
+
+            <div class="result-chat-msg">
+                <div class="msg-avatar" style="background: var(--avatar-pink);">테</div>
+                <div class="msg-content">
+                    <div class="msg-name">테오</div>
+                    <div class="msg-bubble">나도 궁금해~</div>
+                </div>
+            </div>
+
+            <!-- 결과 말풍선 (내가 보낸 메시지 - 오른쪽 정렬) -->
+            <div class="result-chat-msg my-msg">
+                <div class="msg-content">
+                    <div class="msg-result-card">
+                        <div class="msg-result-header">
+                            <div class="msg-result-badge">🏆 AI 추천 장소</div>
+                            <div class="msg-result-place" id="rv-place-name">스타벅스 강남역점</div>
+                            <div class="msg-result-category" id="rv-place-category">카페 · 강남구</div>
+                        </div>
+                        <div class="msg-result-body">
+                            <div class="msg-result-info">
+                                <span>📅</span>
+                                <span id="rv-datetime">1월 24일 (금) 17:30</span>
+                            </div>
+                            <div class="msg-result-info">
+                                <span>📍</span>
+                                <span id="rv-address">서울 강남구 강남대로 396</span>
+                            </div>
+                            <div class="msg-result-participants" id="rv-participants"></div>
+                            <div class="msg-result-fairness">
+                                <span>공평도</span>
+                                <span class="fairness-value" id="rv-fairness">88</span>
+                                <span>점</span>
+                            </div>
+                            <div class="msg-result-actions">
+                                <button onclick="openResultMapFromView()">🗺️ 지도보기</button>
+                                <button onclick="shareFromResultView()">💬 공유하기</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="result-chat-input">
+            <button class="plus-btn">+</button>
+            <input type="text" placeholder="메시지 입력" disabled>
+            <button class="send-btn">#</button>
+        </div>
+    </div>
+
     <!-- Mobile App -->
     <div class="mobile-app">
         <!-- Phase Indicator -->
@@ -2098,10 +2623,10 @@
                     </div>
 
                     <div class="phase1-avatars">
-                        <div class="phase1-avatar" style="background: var(--avatar-yellow);">나</div>
-                        <div class="phase1-avatar" style="background: var(--avatar-green);">민</div>
-                        <div class="phase1-avatar" style="background: var(--avatar-pink);">수</div>
-                        <div class="phase1-avatar" style="background: var(--avatar-blue);">재</div>
+                        <div class="phase1-avatar" style="background: var(--avatar-yellow);">노</div>
+                        <div class="phase1-avatar" style="background: var(--avatar-green);">후</div>
+                        <div class="phase1-avatar" style="background: var(--avatar-pink);">테</div>
+                        <div class="phase1-avatar" style="background: var(--avatar-blue);">나</div>
                     </div>
 
                     <div class="phase1-chat-area">
@@ -2109,8 +2634,25 @@
                             <span id="today-date">2024년 1월 15일 월요일</span>
                         </div>
 
-                        <!-- 약속 생성 카드 (생성자용) -->
-                        <div class="phase1-card" id="create-card">
+                        <!-- 채팅 말풍선들 (약속 잡기 전 대화) -->
+                        <div class="phase1-chat-bubble">
+                            <div class="bubble-avatar" style="background: var(--avatar-green);">후</div>
+                            <div class="bubble-content">
+                                <div class="bubble-name">후니</div>
+                                <div class="bubble-text">우리 다음주에 만나자!</div>
+                            </div>
+                        </div>
+
+                        <div class="phase1-chat-bubble">
+                            <div class="bubble-avatar" style="background: var(--avatar-pink);">테</div>
+                            <div class="bubble-content">
+                                <div class="bubble-name">테오</div>
+                                <div class="bubble-text">좋아~ 근데 어디서 볼까?</div>
+                            </div>
+                        </div>
+
+                        <!-- 약속 생성 카드 (생성자용) - 채팅 이후에 나타남 -->
+                        <div class="phase1-card" id="create-card" style="display: none;">
                             <div class="phase1-card-header">
                                 <div class="phase1-card-icon">🐥</div>
                                 <div class="phase1-card-title">카카오 모여라</div>
@@ -2148,64 +2690,98 @@
                             </div>
                         </div>
 
-                        <!-- 결과 공유 카드 -->
-                        <div class="result-card" id="result-card" style="display: none;">
-                            <div class="result-card-header">
-                                <div class="result-card-badge">
-                                    <span>🏆</span>
-                                    <span>AI 추천 장소</span>
-                                </div>
-                                <div class="result-card-title" id="result-place-name">스타벅스 강남역점</div>
-                                <div class="result-card-category" id="result-place-category">카페 · 강남구</div>
-                            </div>
-                            <div class="result-card-body">
-                                <div class="result-info-row">
-                                    <div class="result-info-icon">📅</div>
-                                    <div class="result-info-content">
-                                        <div class="result-info-label">약속 일시</div>
-                                        <div class="result-info-value" id="result-datetime">1월 24일 (금) 17:30</div>
+                        <!-- 결과 공유 말풍선 (채팅 스타일) -->
+                        <div class="phase1-chat-bubble result-bubble" id="result-card" style="display: none;">
+                            <div class="bubble-avatar" style="background: var(--avatar-yellow);" id="result-creator-avatar">나</div>
+                            <div class="bubble-content">
+                                <div class="bubble-name" id="result-creator-name">나</div>
+                                <div class="result-bubble-card">
+                                    <div class="result-bubble-header">
+                                        <div class="result-bubble-badge">🏆 AI 추천 장소</div>
+                                        <div class="result-bubble-place" id="result-place-name">스타벅스 강남역점</div>
+                                        <div class="result-bubble-category" id="result-place-category">카페 · 강남구</div>
+                                    </div>
+                                    <div class="result-bubble-body">
+                                        <div class="result-bubble-info">
+                                            <span>📅</span>
+                                            <span id="result-datetime">1월 24일 (금) 17:30</span>
+                                        </div>
+                                        <div class="result-bubble-info">
+                                            <span>📍</span>
+                                            <span id="result-address">서울 강남구 강남대로 396</span>
+                                        </div>
+                                        <div class="result-bubble-participants" id="result-participants"></div>
+                                        <div class="result-bubble-fairness">
+                                            <span>공평도</span>
+                                            <span class="fairness-score" id="result-fairness-score">88</span>
+                                            <span>점</span>
+                                        </div>
+                                        <div class="result-bubble-actions">
+                                            <button onclick="openResultMap()">🗺️ 지도보기</button>
+                                            <button onclick="shareResult()">💬 공유하기</button>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="result-info-row">
-                                    <div class="result-info-icon">📍</div>
-                                    <div class="result-info-content">
-                                        <div class="result-info-label">주소</div>
-                                        <div class="result-info-value" id="result-address">서울 강남구 강남대로 396</div>
-                                    </div>
-                                </div>
-                                <div style="font-size: 12px; color: var(--gray-text); margin-bottom: 8px;">참여자별 이동시간</div>
-                                <div class="result-participants" id="result-participants">
-                                    <!-- JS로 동적 생성 -->
-                                </div>
-                                <div class="result-fairness">
-                                    <span class="result-fairness-score" id="result-fairness-score">88</span>
-                                    <span class="result-fairness-label">공평도 점수</span>
-                                </div>
-                                <div class="result-card-actions">
-                                    <button class="result-btn-secondary" onclick="openResultMap()">🗺️ 지도</button>
-                                    <button class="result-btn-primary" onclick="shareResult()">💬 공유하기</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="phase1-chat-bubble">
-                            <div class="bubble-avatar" style="background: var(--avatar-green);">민</div>
-                            <div class="bubble-content">
-                                <div class="bubble-name">민지</div>
-                                <div class="bubble-text">오 좋아! 나도 참여할게 👍</div>
-                            </div>
-                        </div>
-
-                        <div class="phase1-chat-bubble">
-                            <div class="bubble-avatar" style="background: var(--avatar-pink);">수</div>
-                            <div class="bubble-content">
-                                <div class="bubble-name">수현</div>
-                                <div class="bubble-text">장소 정하는게 항상 어려웠는데 좋다!</div>
                             </div>
                         </div>
                     </div>
 
+                    <!-- Chat Menu (채팅 메뉴) -->
+                    <div class="chat-menu" id="chat-menu">
+                        <div class="chat-menu-grid">
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon yellow">💰</div>
+                                <span class="chat-menu-label">송금</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon red">🎮</div>
+                                <span class="chat-menu-label">미니게임</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">📍</div>
+                                <span class="chat-menu-label">지도</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon lightblue">👥</div>
+                                <span class="chat-menu-label">친구위치</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon purple">🎵</div>
+                                <span class="chat-menu-label">뮤직</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">📁</div>
+                                <span class="chat-menu-label">파일</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">👤</div>
+                                <span class="chat-menu-label">연락처</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon gray">🎙️</div>
+                                <span class="chat-menu-label">음성메시지</span>
+                            </button>
+                            <button class="chat-menu-item" onclick="showMoyeoraCard()">
+                                <div class="chat-menu-icon orange">🐥</div>
+                                <span class="chat-menu-label">모여라</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">⏰</div>
+                                <span class="chat-menu-label">예약메시지</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">📷</div>
+                                <span class="chat-menu-label">캡쳐</span>
+                            </button>
+                            <button class="chat-menu-item">
+                                <div class="chat-menu-icon blue">📅</div>
+                                <span class="chat-menu-label">일정</span>
+                            </button>
+                        </div>
+                    </div>
+
                     <div class="phase1-input-bar">
+                        <button class="plus-btn" id="chat-menu-toggle" onclick="toggleChatMenu()">+</button>
                         <input type="text" placeholder="메시지 입력" disabled>
                         <button class="send-btn">#</button>
                     </div>
@@ -2325,6 +2901,15 @@
                             <div class="phase4-ai-banner-title">🏆 AI가 추천하는 장소</div>
                             <div class="phase4-ai-banner-subtitle">모든 참여자의 조건과 이동 시간을 고려했어요</div>
                         </div>
+                        <div class="phase4-ai-reason" id="ai-reason">
+                            <div class="ai-reason-header">
+                                <span class="ai-reason-icon">🤖</span>
+                                <span class="ai-reason-title">AI 추천 이유</span>
+                            </div>
+                            <div class="ai-reason-content" id="ai-reason-content">
+                                <!-- JavaScript에서 동적으로 채워짐 -->
+                            </div>
+                        </div>
                         <div class="phase4-place-list" id="place-list"></div>
                         <div class="phase4-place-detail" id="place-detail" style="display: none;"></div>
                     </div>
@@ -2346,17 +2931,12 @@
                         <div class="phase4-fairness-score" id="fairness-score"></div>
                         <div class="phase4-fairness-chart" id="fairness-chart"></div>
                         <div class="phase4-fairness-explanation" id="fairness-explanation"></div>
-                        <div style="padding: 0 16px;">
-                            <button class="btn-outline" style="width: 100%;">
-                                📥 인포그래픽 다운로드
-                            </button>
-                        </div>
                     </div>
                 </div>
 
                 <div class="phase4-bottom-actions">
                     <button class="btn-secondary" onclick="shareResult()" style="margin-bottom: 8px;">
-                        🔗 단톡방에 공유하기
+                        💬 오픈채팅에 공유하기
                     </button>
                     <button class="phase4-reset-btn" onclick="resetApp()">
                         ↺ 새로운 약속 만들기
@@ -2398,6 +2978,67 @@
             results: [],
             selectedPlace: null
         };
+
+        // ===== Dummy Test Data (이미 3명이 등록된 상태) =====
+        const dummyParticipants = [
+            {
+                name: '후니',
+                location: '홍대입구역',
+                lat: 37.556980,
+                lng: 126.923650,
+                travelTime: 35,
+                conditions: ['조용한 대화', '카페'],
+                isReady: true
+            },
+            {
+                name: '테오',
+                location: '잠실역',
+                lat: 37.513282,
+                lng: 127.100167,
+                travelTime: 40,
+                conditions: ['웰컴키즈존'],
+                isReady: true
+            },
+            {
+                name: '나인',
+                location: '신촌역',
+                lat: 37.555134,
+                lng: 126.936893,
+                travelTime: 30,
+                conditions: ['주차', '룸'],
+                isReady: true
+            }
+        ];
+
+        const dummyResults = [
+            {
+                place_name: '투썸플레이스 강남파이낸스센터점',
+                address_name: '서울 강남구 테헤란로 152',
+                category_name: '카페',
+                x: '127.032308',
+                y: '37.500633',
+                phone: '02-555-1234',
+                matchRate: 95
+            },
+            {
+                place_name: '스타벅스 강남역점',
+                address_name: '서울 강남구 강남대로 396',
+                category_name: '카페',
+                x: '127.028331',
+                y: '37.498112',
+                phone: '02-555-5678',
+                matchRate: 88
+            },
+            {
+                place_name: '할리스 강남점',
+                address_name: '서울 강남구 역삼동 825-1',
+                category_name: '카페',
+                x: '127.030456',
+                y: '37.499821',
+                phone: '02-555-9999',
+                matchRate: 82
+            }
+        ];
 
         // ===== Kakao Map =====
         let map = null;
@@ -2503,6 +3144,10 @@
             // Render initial UI
             renderPlaceTypeTags();
             renderDetailFilters();
+
+            // 더미 참여자 데이터 로드 (테스트용 - 민지가 이미 등록된 상태)
+            AppState.participants = [...dummyParticipants];
+            console.log('더미 참여자 로드됨:', AppState.participants);
         }
 
         function initSession() {
@@ -2671,6 +3316,33 @@
 
             const isValid = name && hasLocation;
             document.getElementById('submit-input-btn').disabled = !isValid;
+        }
+
+        // ===== Chat Menu =====
+        function toggleChatMenu() {
+            const menu = document.getElementById('chat-menu');
+            const toggleBtn = document.getElementById('chat-menu-toggle');
+
+            menu.classList.toggle('active');
+            toggleBtn.classList.toggle('active');
+        }
+
+        function showMoyeoraCard() {
+            const createCard = document.getElementById('create-card');
+            const chatMenu = document.getElementById('chat-menu');
+            const toggleBtn = document.getElementById('chat-menu-toggle');
+
+            // Show the create card
+            createCard.style.display = 'block';
+
+            // Close the menu
+            chatMenu.classList.remove('active');
+            toggleBtn.classList.remove('active');
+
+            // Scroll to the card
+            setTimeout(() => {
+                createCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
 
         // ===== Phase Navigation =====
@@ -3154,10 +3826,10 @@
             if (!supabaseClient) {
                 // Mock data for demo
                 AppState.participants = [
-                    { id: '1', name: AppState.myInfo.name || '나', location: AppState.myInfo.location, lat: AppState.myInfo.lat, lng: AppState.myInfo.lng, isMe: true, isReady: true, conditions: AppState.myInfo.conditions },
-                    { id: '2', name: '지민', location: '홍대입구역', lat: 37.556944, lng: 126.923917, isMe: false, isReady: true, conditions: ['주차'] },
-                    { id: '3', name: '수현', location: '강남역', lat: 37.498095, lng: 127.02761, isMe: false, isReady: true, conditions: ['조용한 대화'] },
-                    { id: '4', name: '민준', location: '신촌역', lat: 37.555178, lng: 126.936893, isMe: false, isReady: true, conditions: ['가성비'] }
+                    { id: '1', name: AppState.myInfo.name || '노아', location: AppState.myInfo.location, lat: AppState.myInfo.lat, lng: AppState.myInfo.lng, isMe: true, isReady: true, conditions: AppState.myInfo.conditions },
+                    { id: '2', name: '후니', location: '홍대입구역', lat: 37.556944, lng: 126.923917, isMe: false, isReady: true, conditions: ['주차'] },
+                    { id: '3', name: '테오', location: '강남역', lat: 37.498095, lng: 127.02761, isMe: false, isReady: true, conditions: ['조용한 대화'] },
+                    { id: '4', name: '나인', location: '신촌역', lat: 37.555178, lng: 126.936893, isMe: false, isReady: true, conditions: ['가성비'] }
                 ];
                 renderParticipants();
                 return;
@@ -3377,9 +4049,67 @@
 
         // ===== Phase 4: Results =====
         function renderResults() {
+            renderAiReason();
             renderPlaceList();
             renderRouteTab();
             renderFairnessTab();
+        }
+
+        function renderAiReason() {
+            const container = document.getElementById('ai-reason-content');
+            const participants = AppState.participants || [];
+            const topPlace = AppState.results && AppState.results[0];
+
+            if (!topPlace) {
+                container.innerHTML = '<p>추천 결과를 분석 중입니다...</p>';
+                return;
+            }
+
+            // 참여자들의 조건 수집
+            const allConditions = [];
+            participants.forEach(p => {
+                if (p.conditions) {
+                    allConditions.push(...p.conditions);
+                }
+            });
+
+            // 조건 빈도 계산
+            const conditionCounts = {};
+            allConditions.forEach(c => {
+                conditionCounts[c] = (conditionCounts[c] || 0) + 1;
+            });
+
+            // 가장 많이 선택된 조건들
+            const topConditions = Object.entries(conditionCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 3)
+                .map(([cond, count]) => cond);
+
+            // 평균 이동 시간 계산
+            const avgTime = topPlace.travelTimes
+                ? Math.round(topPlace.travelTimes.reduce((sum, t) => sum + t.time, 0) / topPlace.travelTimes.length)
+                : 30;
+
+            // 추천 이유 생성
+            let reasons = [];
+
+            reasons.push(`<span class="ai-reason-highlight">${participants.length}명</span>의 출발 위치를 분석하여 모두가 <span class="ai-reason-highlight">평균 ${avgTime}분</span> 내로 도착할 수 있는 중심 지역을 선정했어요.`);
+
+            if (topConditions.length > 0) {
+                reasons.push(`참여자들이 선호하는 조건인 <span class="ai-reason-highlight">${topConditions.join(', ')}</span>을(를) 만족하는 장소예요.`);
+            }
+
+            if (topPlace.matchedConditions && topPlace.matchedConditions.length > 0) {
+                reasons.push(`이 장소는 <span class="ai-reason-highlight">${topPlace.matchedConditions.slice(0, 3).join(', ')}</span> 조건에 부합해요.`);
+            }
+
+            reasons.push(`공평도 점수 <span class="ai-reason-highlight">${topPlace.fairnessScore}%</span>로 모든 참여자에게 균형 잡힌 선택이에요.`);
+
+            container.innerHTML = `
+                <ul>
+                    ${reasons.map(r => `<li>${r}</li>`).join('')}
+                </ul>
+            `;
         }
 
         function renderPlaceList() {
@@ -3687,8 +4417,32 @@
         }
 
         function shareResult() {
-            currentShareMode = 'result';
-            openShareSheet();
+            // 결과 채팅 뷰로 이동
+            showResultChatView();
+        }
+
+        function showResultChatView() {
+            const session = AppState.meetingSession;
+            const place = AppState.selectedPlace || (AppState.results && AppState.results[0]);
+
+            // 결과 데이터 구성
+            const resultData = {
+                placeName: place?.place_name || place?.name || '추천 장소',
+                category: place?.category_name || '',
+                address: place?.address_name || place?.address || '',
+                date: session?.date || '',
+                time: session?.time || '',
+                lat: place?.y || place?.lat || '',
+                lng: place?.x || place?.lng || '',
+                fairness: calculateFairnessScore(),
+                participants: AppState.participants.map(p => ({
+                    n: p.name,
+                    t: p.travelTime || 0
+                }))
+            };
+
+            // 결과 채팅 뷰 표시
+            showResultCard(resultData);
         }
 
         function getResultShareURL() {
@@ -3742,57 +4496,40 @@
         }
 
         function showResultCard(resultData) {
-            // 결과 뷰 모드에서는 phase indicator 숨기기
-            document.querySelector('.phase-indicator').style.display = 'none';
+            // 메인 앱 숨기기
+            document.querySelector('.mobile-app').style.display = 'none';
 
-            // 채팅 배경을 깔끔한 그라데이션으로 변경
-            const chatBg = document.querySelector('.phase1-chat-bg');
-            if (chatBg) {
-                chatBg.style.background = 'linear-gradient(180deg, #B2C7D9 0%, #E8EFF5 50%, #F5F7FA 100%)';
-                chatBg.style.display = 'flex';
-                chatBg.style.flexDirection = 'column';
+            // 결과 채팅 뷰 표시
+            const resultView = document.getElementById('result-chat-view');
+            resultView.classList.add('active');
+
+            // 채팅방 제목 설정
+            const title = AppState.meetingSession?.title || '약속';
+            document.getElementById('result-chat-title').textContent = title;
+
+            // 오늘 날짜 설정
+            const today = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+            document.getElementById('result-chat-date').textContent = today.toLocaleDateString('ko-KR', options);
+
+            // 참여자 수 설정
+            const participantCount = resultData.participants?.length || 4;
+            document.getElementById('result-chat-count').textContent = participantCount;
+
+            // 아바타 업데이트
+            if (resultData.participants && resultData.participants.length > 0) {
+                const avatarsEl = document.getElementById('result-chat-avatars');
+                avatarsEl.innerHTML = resultData.participants.map((p, i) => `
+                    <div class="result-chat-avatar" style="background: ${avatarColors[i % avatarColors.length]};">
+                        ${p.n ? p.n.charAt(0) : '?'}
+                    </div>
+                `).join('');
             }
-
-            // 헤더 숨기기 (카카오톡 헤더)
-            const phase1Header = document.querySelector('.phase1-header');
-            if (phase1Header) phase1Header.style.display = 'none';
-
-            // 아바타 영역 숨기기
-            const avatars = document.querySelector('.phase1-avatars');
-            if (avatars) avatars.style.display = 'none';
-
-            // 날짜 뱃지 숨기기
-            const dateBadge = document.querySelector('.phase1-date-badge');
-            if (dateBadge) dateBadge.style.display = 'none';
-
-            // 채팅 버블들 숨기기
-            document.querySelectorAll('.phase1-chat-bubble').forEach(el => {
-                el.style.display = 'none';
-            });
-
-            // 입력바 숨기기
-            const inputBar = document.querySelector('.phase1-input-bar');
-            if (inputBar) inputBar.style.display = 'none';
-
-            // 채팅 영역을 중앙 정렬
-            const chatArea = document.querySelector('.phase1-chat-area');
-            if (chatArea) {
-                chatArea.style.flex = '1';
-                chatArea.style.display = 'flex';
-                chatArea.style.alignItems = 'center';
-                chatArea.style.justifyContent = 'center';
-                chatArea.style.padding = '20px';
-            }
-
-            // 기존 카드 숨기기
-            document.getElementById('create-card').style.display = 'none';
-            document.getElementById('join-card').style.display = 'none';
-            document.getElementById('result-card').style.display = 'block';
 
             // 결과 데이터 표시
-            document.getElementById('result-place-name').textContent = resultData.placeName || '추천 장소';
-            document.getElementById('result-place-category').textContent = resultData.category || '';
-            document.getElementById('result-address').textContent = resultData.address || '';
+            document.getElementById('rv-place-name').textContent = resultData.placeName || '추천 장소';
+            document.getElementById('rv-place-category').textContent = resultData.category || '';
+            document.getElementById('rv-address').textContent = resultData.address || '';
 
             // 날짜/시간 표시
             let datetimeStr = '';
@@ -3804,26 +4541,25 @@
             if (resultData.time) {
                 datetimeStr += ` ${resultData.time}`;
             }
-            document.getElementById('result-datetime').textContent = datetimeStr || '일시 미정';
+            document.getElementById('rv-datetime').textContent = datetimeStr || '일시 미정';
 
-            // 참여자 표시
-            const participantsEl = document.getElementById('result-participants');
+            // 참여자 이동시간 표시
+            const participantsEl = document.getElementById('rv-participants');
             if (resultData.participants && resultData.participants.length > 0) {
                 participantsEl.innerHTML = resultData.participants.map((p, i) => `
-                    <div class="result-participant-chip">
-                        <div class="result-participant-avatar" style="background: ${avatarColors[i % avatarColors.length]};">
+                    <div class="p-chip">
+                        <div class="p-avatar" style="background: ${avatarColors[i % avatarColors.length]};">
                             ${p.n ? p.n.charAt(0) : '?'}
                         </div>
-                        <span>${p.n || '참여자'}</span>
-                        <span style="color: var(--gray-text);">${p.t || 0}분</span>
+                        <span>${p.n || '?'} ${p.t || 0}분</span>
                     </div>
                 `).join('');
             } else {
-                participantsEl.innerHTML = '<span style="color: var(--gray-text); font-size: 12px;">참여자 정보 없음</span>';
+                participantsEl.innerHTML = '';
             }
 
             // 공평도 점수
-            document.getElementById('result-fairness-score').textContent = resultData.fairness || '?';
+            document.getElementById('rv-fairness').textContent = resultData.fairness || '?';
 
             // AppState에 결과 저장 (지도 열기용)
             AppState.selectedPlace = {
@@ -3832,6 +4568,32 @@
                 x: resultData.lng,
                 y: resultData.lat
             };
+
+            // 메시지 영역 스크롤을 맨 아래로
+            setTimeout(() => {
+                const messagesArea = document.querySelector('.result-chat-messages');
+                if (messagesArea) {
+                    messagesArea.scrollTop = messagesArea.scrollHeight;
+                }
+            }, 100);
+        }
+
+        // 결과 뷰에서 지도 열기
+        function openResultMapFromView() {
+            const place = AppState.selectedPlace;
+            if (place && (place.x || place.lng) && (place.y || place.lat)) {
+                const lng = place.x || place.lng;
+                const lat = place.y || place.lat;
+                window.open(`https://map.kakao.com/link/map/${encodeURIComponent(place.place_name || place.name)},${lat},${lng}`, '_blank');
+            } else {
+                showToast('지도 정보가 없습니다');
+            }
+        }
+
+        // 결과 뷰에서 공유하기
+        function shareFromResultView() {
+            currentShareMode = 'result';
+            openShareSheet();
         }
 
         function calculateFairnessScore() {
