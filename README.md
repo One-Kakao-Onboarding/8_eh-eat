@@ -46,17 +46,16 @@
 ## 3. 기능 시나리오
 
 1. **진입**: 채팅방 하단 `+` 메뉴에서 **[모여라]** 아이콘을 클릭합니다.
-    <img width="474" height="1024" alt="3" src="https://github.com/user-attachments/assets/7b46bab1-9a93-4934-8109-6c542ab53fd9" />
-    
 
-2. **입력**: 참여자들은 각자의 출발 위치와 
-그날의 특이사항(육아 동반, 차량 유무 등)을 입력합니다.
-    <img width="494" height="853" alt="4" src="https://github.com/user-attachments/assets/43b72717-915d-4bd9-abcf-1ed39b7e20cb" />
-    
+<img width="474" height="1024" alt="3" src="https://github.com/user-attachments/assets/7b46bab1-9a93-4934-8109-6c542ab53fd9" />    
 
+2. **입력**: 참여자들은 각자의 출발 위치와 그날의 특이사항(육아 동반, 차량 유무 등)을 입력합니다.
+
+<img width="494" height="853" alt="4" src="https://github.com/user-attachments/assets/43b72717-915d-4bd9-abcf-1ed39b7e20cb" />
+    
 3. **동기화**: 누가 입력을 마쳤는지 실시간으로 확인합니다.
-    <img width="504" height="859" alt="5" src="https://github.com/user-attachments/assets/e257746e-f41b-40d7-bc8e-d6cbc1e483eb" />
-    
+
+<img width="504" height="859" alt="5" src="https://github.com/user-attachments/assets/e257746e-f41b-40d7-bc8e-d6cbc1e483eb" />
 
 4. **결과**: 모두에게 이동 시간이 가장 공평한 최적의 장소(식당/카페)가 채팅방에 공유됩니다.
     
